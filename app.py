@@ -9,6 +9,15 @@ import matplotlib.pyplot as plt
 header = st.container()
 dataset =st.container()
 
+st.write("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fascinate');
+html, body, [class*="css"]  {
+   font-family: 'sans serif', cursive;
+}
+</style>
+""", unsafe_allow_html=True)
+
 #load Images
 @st.cache
 def load_image(image_file):
