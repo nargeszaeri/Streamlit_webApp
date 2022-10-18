@@ -95,12 +95,13 @@ if st.button("Time Series Decomposition"):
     csv = convert_df(df_disagg)
 
     st.download_button(
-    "Press to Download",
+    "Press to Download Disaggregation Result",
     csv,
-    "file.csv",
+    "disagg_result.csv",
     "text/csv",
     key='download-csv'
     )
+    print(df_disagg)
 #################################################################
     # df_htg = pd.concat([df_htg1, df_htg2], axis=1)
     # print(df_htg)
