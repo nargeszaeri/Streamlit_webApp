@@ -18,20 +18,22 @@ def load_image(image_file):
 with header:
     st.title("Energy Disaggregation Analysis")
     image_file = st.file_uploader("Upload Building Image",type=["png","jpg","jpeg"])
-    file_details = {"filename":image_file.name}
-    st.write(file_details)
-    st.image(load_image(image_file))
-    st.write(type(image_file))
+    if image_file is not None:
+        file_details = {"filename":image_file.name}
+        st.write(file_details)
+        st.image(load_image(image_file))
+        st.write(type(image_file))
 
 with dataset:
     st.header('Total Building Energy Data')
     data_Energy = st.file_uploader("Upload Total Energy Data in CSV format", type=["csv"])
-    st.write(type(data_Energy))
-    file_details = {"filename":data_Energy.name,"filetype":data_Energy.type,"filesize":data_Energy.size}
-    st.write(file_details)
-    df_energy = pd.read_csv(data_Energy,index_col=0)
-    st.dataframe(df_energy)
-    st.line_chart(df_energy['Total Energy (MJ)'])
+    if data_Energy is not None:
+        st.write(type(data_Energy))
+        file_details = {"filename":data_Energy.name,"filetype":data_Energy.type,"filesize":data_Energy.size}
+        st.write(file_details)
+        df_energy = pd.read_csv(data_Energy,index_col=0)
+        st.dataframe(df_energy)
+        st.line_chart(df_energy['Total Energy (MJ)'])
 ################################################################
 if st.button("Time Series Components"):
     stl_result = seasonal_decompose(df_energy['Total Energy (MJ)'], model='multiplicative',period=24*7)
