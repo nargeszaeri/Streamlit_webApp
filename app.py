@@ -24,6 +24,10 @@ def load_image(image_file):
     img =Image.open(image_file)
     return img
 
+@st.experimental_memo
+def convert_df(df):
+   return df.to_csv(index=False).encode('utf-8')
+
 with header:
     st.title("Energy Disaggregation Analysis")
     image_file = st.file_uploader("Upload Building Image",type=["png","jpg","jpeg"])
@@ -80,7 +84,26 @@ if st.button("Time Series Decomposition"):
     st.subheader('Heating  (MJ)')
     st.line_chart(df_htg1)
     st.line_chart(df_htg2)
+################################################################
+    df_disagg = pd.DataFrame()
+    df_disagg['lightingPlugLoads'] = df_seasonal_elec
+    # df_disagg['Heating'] = df_htg
+    df_disagg['Cooling'] = df_clg
+    df_disagg['Cooling'] = df_disagg['Cooling'].fillna(0)
+    df_disagg['Heating1'] = df_htg1
+    df_disagg['Heating1'] = df_disagg['Heating1'].fillna(0)
+    csv = convert_df(df_disagg)
+
+    st.download_button(
+    "Press to Download",
+    csv,
+    "file.csv",
+    "text/csv",
+    key='download-csv'
+    )
 #################################################################
+    # df_htg = pd.concat([df_htg1, df_htg2], axis=1)
+    # print(df_htg)
     
 
 
