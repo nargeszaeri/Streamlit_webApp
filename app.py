@@ -66,32 +66,34 @@ if st.button("Time Series Decomposition"):
     st.line_chart(df_seasonal_elec)
 
 ########### Cooling #############################################    
-    bkp1 = '2018-04-28 08:00:00'
-    bkp2 = '2018-09-24 08:00:00'
-    df_clg = (stl_result.seasonal.loc[bkp1:bkp2]*stl_result.trend.loc[bkp1:bkp2]*stl_result.resid[bkp1:bkp2])
-    df_clg = df_clg.loc[bkp1:bkp2] - df_seasonal_elec.loc[bkp1:bkp2]
+    bkp1 = '2018-04-28 07:00:00'
+    bkp2 = '2018-04-28 08:00:00'
+    bkp3 = '2018-09-24 07:00:00'
+    bkp4 = '2018-09-24 08:00:00'
+    df_clg = (stl_result.seasonal.loc[bkp2:bkp3]*stl_result.trend.loc[bkp2:bkp3]*stl_result.resid[bkp2:bkp3])
+    df_clg = df_clg.loc[bkp2:bkp3] - df_seasonal_elec.loc[bkp2:bkp3]
     df_clg[df_clg < 0] = 0
     st.subheader('Cooling (MJ)')
     st.line_chart(df_clg)
 
 ########### Heating #############################################
     df_htg1 = (stl_result.seasonal.loc[:bkp1]*stl_result.trend.loc[:bkp1]*stl_result.resid.loc[:bkp1])
-    df_htg2 = (stl_result.seasonal.loc[bkp2:]*stl_result.trend.loc[bkp2:]*stl_result.resid.loc[bkp2:])
+    df_htg2 = (stl_result.seasonal.loc[bkp4:]*stl_result.trend.loc[bkp4:]*stl_result.resid.loc[bkp4:])
     df_htg1 = df_htg1.loc[:bkp1]- df_seasonal_elec.loc[:bkp1]
     df_htg1[df_htg1 < 0 ] = 0
-    df_htg2 = df_htg2.loc[bkp2:]- df_seasonal_elec.loc[bkp2:]
+    df_htg2 = df_htg2.loc[bkp4:]- df_seasonal_elec.loc[bkp4:]
     df_htg2[df_htg2 < 0 ] = 0
     st.subheader('Heating  (MJ)')
     st.line_chart(df_htg1)
     st.line_chart(df_htg2)
 ################################################################
+    df_htg_clg = pd.concat([df_htg1, df_clg, df_htg2])
     df_disagg = pd.DataFrame()
     df_disagg['lightingPlugLoads'] = df_seasonal_elec
-    # df_disagg['Heating'] = df_htg
     df_disagg['Cooling'] = df_clg
     df_disagg['Cooling'] = df_disagg['Cooling'].fillna(0)
-    df_disagg['Heating1'] = df_htg1
-    df_disagg['Heating1'] = df_disagg['Heating1'].fillna(0)
+    df_disagg['Heating'] = df_htg_clg.values - df_disagg['Cooling'].values
+
     csv = convert_df(df_disagg)
 
     st.download_button(
