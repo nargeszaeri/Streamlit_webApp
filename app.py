@@ -30,12 +30,12 @@ def convert_df(df):
 
 with header:
     st.title("Energy Disaggregation Analysis")
-    image_file = st.file_uploader("Upload Building Image",type=["png","jpg","jpeg"])
-    if image_file is not None:
-        file_details = {"filename":image_file.name}
-        st.write(file_details)
-        st.image(load_image(image_file))
-        st.write(type(image_file))
+    # image_file = st.file_uploader("Upload Building Image",type=["png","jpg","jpeg"])
+    # if image_file is not None:
+    #     file_details = {"filename":image_file.name}
+    #     st.write(file_details)
+    #     st.image(load_image(image_file))
+    #     st.write(type(image_file))
 
 with dataset:
     st.header('Total Building Energy Data')
