@@ -1,0 +1,4 @@
+{
+   "api_key":"k5ShK0iTlLq34UTzM5nmzFrQzi5vBCG9",
+   "client_secret":"ubPPqszjGFxbjeUmjhHr3NmFmKs14cF4DHYeIz6JMqlCsAK905zfiUYhNvU8p5eO"
+}
