@@ -791,7 +791,7 @@ with tab3:
 
         ######################################################################
         # Request access token using client_id, and client_secret
-        url = 'https://login-global.coppertreeanalytics.com/oauth/token'
+        url = 'https://login-ca-central-prod.coppertreeanalytics.com/oauth2/token'
 
         my_header = {'content-type': 'application/x-www-form-urlencoded'}
         my_data = {
